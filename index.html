@@ -1,11 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Blogify - Home</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/9360/9360595.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
-<body>
-    
+
+<body class="bg-gray-100">
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="text-3xl font-bold text-gray-700">
+                Blogify
+            </div>
+            <div class="flex items-center">
+                <button class="text-gray-500 hover:text-gray-600 focus:outline-none mx-4 sm:mx-0">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="text-gray-500 hover:text-gray-600 focus:outline-none mx-4 sm:mx-0">
+                    <i class="fas fa-shopping-cart"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto mt-8">
+        <section class="bg-white p-6 rounded-lg shadow-md">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="md:col-span-1">
+                    <img src="src/jernej-graj-rlNibgIqi4o-unsplash.jpg" alt="Main image" class="w-full h-auto rounded-lg">
+                </div>
+                <div class="md:col-span-1 flex flex-col justify-center">
+                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Life is a flower of which love is the honey.</h1>
+                    <p class="text-gray-600 mb-4">Who, being loved, is poor? Life is a flower of which love is the honey” involves capturing its essence concisely</p>
+                    <a href="#" class="text-blue-500 hover:underline">Read more</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Categories</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <img src="src/toa-heftiba-rQqabcGBsyk-unsplash.jpg" alt="Lifestyle" class="w-full h-auto rounded-lg">
+                    <p class="text-center text-gray-700 mt-2">LIFESTYLE</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <img src="src/alexander-mils-nG4ZimMIO_k-unsplash.jpg" alt="Nutrition" class="w-full h-auto rounded-lg">
+                    <p class="text-center text-gray-700 mt-2">NUTRITION</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <img src="src/dom-hill-nimElTcTNyY-unsplash.jpg" alt="Fashion" class="w-full h-auto rounded-lg">
+                    <p class="text-center text-gray-700 mt-2">FASHION</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <img src="src/roberto-nickson-rEJxpBskj3Q-unsplash.jpg" alt="Interior" class="w-full h-auto rounded-lg">
+                    <p class="text-center text-gray-700 mt-2">INTERIOR</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Recent Posts</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <img src="https://placehold.co/400x300" alt="Recent Post 1" class="w-full h-auto rounded-lg">
+                    <h3 class="text-lg font-semibold text-gray-800 mt-2">.</h3>
+                    <p class="text-gray-600">17 Jul 2024</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <img src="https://placehold.co/400x300" alt="Recent Post 2" class="w-full h-auto rounded-lg">
+                    <h3 class="text-lg font-semibold text-gray-800 mt-2">.</h3>
+                    <p class="text-gray-600">17 Jul 2024</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <img src="https://placehold.co/400x300" alt="Recent Post 3" class="w-full h-auto rounded-lg">
+                    <h3 class="text-lg font-semibold text-gray-800 mt-2">.</h3>
+                    <p class="text-gray-600">17 Jul 2024</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white mt-12 py-4 shadow-md">
+        <div class="container mx-auto text-center">
+            <p class="text-gray-600">© 2024 Blogify. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
+
 </html>
