@@ -7,15 +7,22 @@
     <title>Blogify - Post</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body class="bg-gray-100">
     <header class="bg-white shadow-md">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
             <div class="text-3xl font-bold text-gray-700">
-                Blogify
+                <a href="index.html">Blogify</a>
             </div>
+            <nav class="flex items-center">
+                <a href="index.html" class="text-gray-500 hover:text-gray-600 mx-4">Home</a>
+                <a href="create-post.html" class="text-gray-500 hover:text-gray-600 mx-4">Create Post</a>
+                <a href="post.html" class="text-gray-500 hover:text-gray-600 mx-4">All Posts</a>
+            </nav>
             <div class="flex items-center">
+                <input type="text" id="search-input" placeholder="Search..." class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <button class="text-gray-500 hover:text-gray-600 focus:outline-none mx-4 sm:mx-0">
                     <i class="fas fa-search"></i>
                 </button>
@@ -28,10 +35,10 @@
 
     <main class="container mx-auto mt-8">
         <article class="bg-white p-6 rounded-lg shadow-md">
-            <h1 class="text-3xl font-bold text-gray-800 mb-4">Post Title</h1>
-            <p class="text-gray-600 mb-4">Published on: <span class="font-semibold">July 18, 2024</span></p>
-            <img src="https://placehold.co/600x400" alt="Blog post image" class="w-full mb-4 rounded-lg">
-            <p class="text-gray-800 leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+            <h1 id="post-title" class="text-3xl font-bold text-gray-800 mb-4">Post Title</h1>
+            <p class="text-gray-600 mb-4">Published on: <span id="post-date" class="font-semibold">July 18, 2024</span></p>
+            <img id="post-image" src="https://placehold.co/600x400" alt="Blog post image" class="w-full mb-4 rounded-lg">
+            <p id="post-content" class="text-gray-800 leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                 do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                 exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
                 reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
@@ -40,7 +47,7 @@
 
         <section class="bg-white p-6 rounded-lg shadow-md mt-8">
             <h2 class="text-2xl font-bold text-gray-800 mb-4">Comments</h2>
-            <form action="#" method="POST" class="space-y-4">
+            <form id="comment-form" action="#" method="POST" class="space-y-4">
                 <div>
                     <label for="comment" class="block text-gray-700">Add a comment</label>
                     <textarea id="comment" name="comment" rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
@@ -48,17 +55,8 @@
                 <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Post Comment</button>
             </form>
 
-            <div class="mt-6 space-y-4">
-                <div class="bg-gray-100 p-4 rounded-lg">
-                    <p class="text-gray-800 font-semibold">Jane Doe</p>
-                    <p class="text-gray-600">This is a sample comment. Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit.</p>
-                </div>
-                <div class="bg-gray-100 p-4 rounded-lg">
-                    <p class="text-gray-800 font-semibold">John Smith</p>
-                    <p class="text-gray-600">Another sample comment. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                </div>
+            <div id="comments-section" class="mt-6 space-y-4">
+                <!-- Comments will be dynamically inserted here -->
             </div>
         </section>
     </main>
@@ -68,6 +66,9 @@
             <p class="text-gray-600">© 2024 Blogify. All rights reserved.</p>
         </div>
     </footer>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
