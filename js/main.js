@@ -1,5 +1,3 @@
-// js/main.js
-
 document.addEventListener('DOMContentLoaded', function () {
     // Function to handle form submission for creating a new post
     function handleCreatePostFormSubmission(event) {
@@ -24,9 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             savePost(postDetails);
-            addPostToIndex(postDetails);
-            event.target.reset();
-            window.location.href = 'index.html';
+            window.location.href = `post.html?title=${encodeURIComponent(postDetails.title)}`;
         };
 
         if (imageFile) {
@@ -136,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <p class="text-gray-800 font-semibold">${comment.author}</p>
             <p class="text-gray-600">${comment.text}</p>
             <p class="text-gray-500 text-sm">${comment.date}</p>
+            <button class="text-red-500 hover:text-red-700 delete-comment" data-date="${comment.date}">Delete</button>
         `;
         return commentElement;
     }
@@ -147,6 +144,17 @@ document.addEventListener('DOMContentLoaded', function () {
         const postComments = comments.filter(comment => comment.postTitle === postTitle);
 
         postComments.forEach(comment => addCommentToPage(comment));
+    }
+
+    // Function to handle deleting comments
+    function handleDeleteComment(event) {
+        if (event.target.classList.contains('delete-comment')) {
+            const date = event.target.getAttribute('data-date');
+            let comments = JSON.parse(localStorage.getItem('comments')) || [];
+            comments = comments.filter(comment => comment.date !== date);
+            localStorage.setItem('comments', JSON.stringify(comments));
+            event.target.parentElement.remove();
+        }
     }
 
     // Event listener for form submission in create-post.html
@@ -166,6 +174,12 @@ document.addEventListener('DOMContentLoaded', function () {
     if (commentForm) {
         commentForm.addEventListener('submit', handleCommentSubmission);
         displayComments();  // Display existing comments when the page loads
+    }
+
+    // Event listener for deleting comments
+    const commentsSection = document.querySelector('#comments-section');
+    if (commentsSection) {
+        commentsSection.addEventListener('click', handleDeleteComment);
     }
 
     // Display post content on post.html
