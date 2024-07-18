@@ -30,8 +30,8 @@ A simple and responsive blog page built using HTML, CSS, JavaScript, and Bootstr
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/simple-blog-page.git
-    cd simple-blog-page
+    git clone https://github.com/BrianShifoko/Blogify.git
+    cd Blogify
     ```
 2. Open the `index.html` file in your browser to view the blog page.
 
