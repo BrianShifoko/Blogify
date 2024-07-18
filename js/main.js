@@ -5,34 +5,148 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleCreatePostFormSubmission(event) {
         event.preventDefault();
         const formData = new FormData(event.target);
-        const postDetails = {
-            title: formData.get('title'),
-            summary: formData.get('summary'),
-            content: formData.get('content'),
-            image: formData.get('image')
+        const title = formData.get('title');
+        const summary = formData.get('summary');
+        const content = formData.get('content');
+        const imageFile = formData.get('image');
+        const imageUrl = formData.get('image-url');
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const imageSrc = imageFile ? e.target.result : imageUrl;
+            const postDetails = {
+                title,
+                summary,
+                content,
+                imageSrc,
+                date: new Date().toLocaleDateString()
+            };
+
+            savePost(postDetails);
+            addPostToIndex(postDetails);
+            event.target.reset();
+            window.location.href = 'index.html';
         };
-        console.log('New Post Created:', postDetails);
-        // Implement further logic such as sending data to a server
+
+        if (imageFile) {
+            reader.readAsDataURL(imageFile);
+        } else {
+            reader.onload(); // Manually trigger the load event for imageUrl
+        }
+    }
+
+    // Function to save the post to local storage
+    function savePost(post) {
+        const posts = JSON.parse(localStorage.getItem('posts')) || [];
+        posts.push(post);
+        localStorage.setItem('posts', JSON.stringify(posts));
+    }
+
+    // Function to add post to index.html
+    function addPostToIndex(post) {
+        const recentPostsContainer = document.querySelector('#recent-posts');
+        if (recentPostsContainer) {
+            const postElement = createPostElement(post);
+            recentPostsContainer.insertBefore(postElement, recentPostsContainer.firstChild);
+        }
+    }
+
+    // Function to create a post element
+    function createPostElement(post) {
+        const postElement = document.createElement('div');
+        postElement.className = 'bg-white p-4 rounded-lg shadow-md';
+        postElement.innerHTML = `
+            <img src="${post.imageSrc}" alt="${post.title}" class="w-full h-auto rounded-lg">
+            <h3 class="text-lg font-semibold text-gray-800 mt-2"><a href="post.html?title=${encodeURIComponent(post.title)}">${post.title}</a></h3>
+            <p class="text-gray-600">${post.date}</p>
+        `;
+        return postElement;
+    }
+
+    // Function to display post on post.html
+    function displayPost() {
+        const params = new URLSearchParams(window.location.search);
+        const title = params.get('title');
+        const posts = JSON.parse(localStorage.getItem('posts')) || [];
+        const post = posts.find(p => p.title === title);
+
+        if (post) {
+            document.getElementById('post-title').textContent = post.title;
+            document.getElementById('post-date').textContent = post.date;
+            document.getElementById('post-image').src = post.imageSrc;
+            document.getElementById('post-content').textContent = post.content;
+        }
     }
 
     // Function to handle search functionality
     function handleSearch(event) {
         const query = event.target.value.toLowerCase();
-        console.log('Search Query:', query);
-        // Implement search logic such as filtering blog posts
+        const posts = JSON.parse(localStorage.getItem('posts')) || [];
+        const results = posts.filter(post => post.title.toLowerCase().includes(query) || post.summary.toLowerCase().includes(query) || post.content.toLowerCase().includes(query));
+        
+        const recentPostsContainer = document.querySelector('#recent-posts');
+        if (recentPostsContainer) {
+            recentPostsContainer.innerHTML = '';
+            results.forEach(post => {
+                const postElement = createPostElement(post);
+                recentPostsContainer.appendChild(postElement);
+            });
+        }
     }
 
     // Function to handle comment submission
     function handleCommentSubmission(event) {
         event.preventDefault();
         const commentText = event.target.querySelector('textarea').value;
+        const postTitle = document.getElementById('post-title').textContent;
         const commentDetails = {
-            author: 'Current User',  // Replace with actual user data
+            author: 'Anonymous',  // This should be replaced with actual user data
             text: commentText,
-            date: new Date().toLocaleString()
+            date: new Date().toLocaleString(),
+            postTitle
         };
-        console.log('New Comment:', commentDetails);
-        // Implement further logic such as displaying the comment on the page
+
+        saveComment(commentDetails);
+        addCommentToPage(commentDetails);
+        event.target.reset();
+    }
+
+    // Function to save comment to local storage
+    function saveComment(comment) {
+        const comments = JSON.parse(localStorage.getItem('comments')) || [];
+        comments.push(comment);
+        localStorage.setItem('comments', JSON.stringify(comments));
+    }
+
+    // Function to add comment to the page
+    function addCommentToPage(comment) {
+        const commentsSection = document.querySelector('#comments-section');
+        if (commentsSection) {
+            const commentElement = createCommentElement(comment);
+            commentsSection.appendChild(commentElement);
+        }
+    }
+
+    // Function to create a comment element
+    function createCommentElement(comment) {
+        const commentElement = document.createElement('div');
+        commentElement.className = 'bg-gray-100 p-4 rounded-lg';
+        commentElement.innerHTML = `
+            <p class="text-gray-800 font-semibold">${comment.author}</p>
+            <p class="text-gray-600">${comment.text}</p>
+            <p class="text-gray-500 text-sm">${comment.date}</p>
+        `;
+        return commentElement;
+    }
+
+    // Function to display comments on post.html
+    function displayComments() {
+        const postTitle = document.getElementById('post-title').textContent;
+        const comments = JSON.parse(localStorage.getItem('comments')) || [];
+        const postComments = comments.filter(comment => comment.postTitle === postTitle);
+
+        postComments.forEach(comment => addCommentToPage(comment));
     }
 
     // Event listener for form submission in create-post.html
@@ -51,5 +165,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const commentForm = document.querySelector('#comment-form');
     if (commentForm) {
         commentForm.addEventListener('submit', handleCommentSubmission);
+        displayComments();  // Display existing comments when the page loads
+    }
+
+    // Display post content on post.html
+    if (window.location.pathname.includes('post.html')) {
+        displayPost();
+    }
+
+    // Display existing posts on index.html
+    if (window.location.pathname.includes('index.html')) {
+        const posts = JSON.parse(localStorage.getItem('posts')) || [];
+        posts.reverse().forEach(post => addPostToIndex(post));
     }
 });
