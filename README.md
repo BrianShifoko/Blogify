@@ -1,4 +1,4 @@
-# Simple Blog Page
+# Simple Blog Page (Blogify)
 
 ## Description
 
