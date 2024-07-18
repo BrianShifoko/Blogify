@@ -1,3 +1,5 @@
+// js/main.js
+
 document.addEventListener('DOMContentLoaded', function () {
     // Function to handle form submission for creating a new post
     function handleCreatePostFormSubmission(event) {
@@ -39,12 +41,27 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('posts', JSON.stringify(posts));
     }
 
+    // Function to add post to index.html and post.html
+    function addPostToPages(post) {
+        addPostToIndex(post);
+        addPostToAllPosts(post);
+    }
+
     // Function to add post to index.html
     function addPostToIndex(post) {
         const recentPostsContainer = document.querySelector('#recent-posts');
         if (recentPostsContainer) {
             const postElement = createPostElement(post);
             recentPostsContainer.insertBefore(postElement, recentPostsContainer.firstChild);
+        }
+    }
+
+    // Function to add post to all posts section in post.html
+    function addPostToAllPosts(post) {
+        const allPostsContainer = document.querySelector('#all-posts');
+        if (allPostsContainer) {
+            const postElement = createPostElement(post);
+            allPostsContainer.insertBefore(postElement, allPostsContainer.firstChild);
         }
     }
 
@@ -191,5 +208,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.location.pathname.includes('index.html')) {
         const posts = JSON.parse(localStorage.getItem('posts')) || [];
         posts.reverse().forEach(post => addPostToIndex(post));
+    }
+
+    // Display existing posts on post.html (all posts section)
+    if (window.location.pathname.includes('post.html')) {
+        const posts = JSON.parse(localStorage.getItem('posts')) || [];
+        posts.reverse().forEach(post => addPostToAllPosts(post));
     }
 });
