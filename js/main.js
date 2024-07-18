@@ -1,7 +1,6 @@
+// js/main.js
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Initialize event listeners and other setup code
-
     // Function to handle form submission for creating a new post
     function handleCreatePostFormSubmission(event) {
         event.preventDefault();
